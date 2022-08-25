@@ -47,6 +47,7 @@ public class FrontController extends HttpServlet {
 		String cp = request.getContextPath();
 		String command = uri.substring(cp.length());
 		System.out.println(command);
+		response.setContentType("text/html; charset=UTF-8");
 
 		ActionForward forward =null;
 		if(command.equals("/main.do")) {
@@ -126,7 +127,6 @@ public class FrontController extends HttpServlet {
 			forward.setPath("error/error.jsp");
 			forward.setRedirect(false);
 		}
-
 
 		RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
 		dispatcher.forward(request, response);
