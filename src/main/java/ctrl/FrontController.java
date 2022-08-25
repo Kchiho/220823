@@ -1,0 +1,150 @@
+package ctrl;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class FrontController
+ */
+@WebServlet("*.do") // *.do 요청을 수행하면 해당 어노테이션에 의해 FC로 오게됨
+public class FrontController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FrontController() { 
+		// FrontController fc = new FrontController(); xxx
+		// 객체화를 하지 않았는데, 메서드를 사용할 수 있었다.
+		// 서블릿 컨테이너(== 객체를 관리하는 것) == 웹 서버 == 톰캣이 서블릿을 객체화해주고있었음
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		actionDO(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		actionDO(request, response);
+	}
+
+	private void actionDO(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String uri = request.getRequestURI();
+		String cp = request.getContextPath();
+		String command = uri.substring(cp.length());
+		System.out.println(command);
+
+		ActionForward forward =null;
+		if(command.equals("/main.do")) {
+			try {
+				forward = new MainAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/logout.do")) {
+			try {
+				forward = new LogoutAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/login.do")) {
+			try {
+				forward = new LoginAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/insertB.do")) {
+			try {
+				forward = new InsertBoardAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/deleteM.do")) {
+			try {
+				forward = new DeleteMemberAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/insertM.do")) {
+			try {
+				forward = new InsertMemberAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/deleteB.do")) {
+			try {
+				forward = new DeleteBoardAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/search.do")) {
+			try {
+				forward = new SearchAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/fav.do")) {
+			try {
+				forward = new FavAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/signupIdCheck.do")) {
+			try {
+				forward = new SignupIdCheckAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		if(forward==null) {
+			forward=new ActionForward();
+			forward.setPath("error/error.jsp");
+			forward.setRedirect(false);
+		}
+
+
+		RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
+		dispatcher.forward(request, response);
+		// : 타겟페이지(인자)로 request,response 객체를 전달하는 메서드
+		// : 제어권을 넘겨줌 -> 클라이언트가 응답을 확인할 수 있음	
+
+		/*
+		if(forward != null) {
+			if(forward.isRedirect()) {		
+				response.sendRedirect(forward.getPath());
+			}
+			else {
+				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
+				dispatcher.forward(request, response);
+			}
+		}
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('요청처리실패');history.go(-1);");	
+		 */
+	}
+}
