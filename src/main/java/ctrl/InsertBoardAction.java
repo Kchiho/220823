@@ -27,7 +27,7 @@ public class InsertBoardAction implements Action{
 			bvo.setMsg(paramMsg);
 			if(bdao.insert(bvo)) {
 				forward=new ActionForward();
-				forward.setPath("main.do?cnt="+Integer.parseInt(paramCnt));
+				forward.setPath("main.do?mid=&cnt="+Integer.parseInt(paramCnt));
 				forward.setRedirect(true);
 			}else {
 				request.setAttribute("errormsg", "게시글 추가 실패");
@@ -39,7 +39,7 @@ public class InsertBoardAction implements Action{
 			rvo.setBid(Integer.parseInt(paramBid));
 			if(bdao.insertR(rvo) & bdao.updateR(rvo)) {
 				forward=new ActionForward();
-				forward.setPath("main.do?cnt="+Integer.parseInt(paramCnt));
+				forward.setPath("main.do?mid=&cnt="+Integer.parseInt(paramCnt));
 				forward.setRedirect(false);
 			}else {
 				request.setAttribute("errormsg", "댓글 추가 or 댓글 수 증가 실패");
