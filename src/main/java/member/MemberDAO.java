@@ -12,10 +12,10 @@ public class MemberDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	final String sql_selectOne="SELECT * FROM MEMBER WHERE MID=? AND MPW=?";
-	final String sql_insert="INSERT INTO MEMBER VALUES(?,?,?)";
+	final String sql_insert="INSERT INTO MEMBER VALUES((SELECT NVL(MAX(MPK),0) +1 FROM MEMBER),?,?,?)";
 	final String sql_delete="DELETE FROM MEMBER WHERE MID=?";
 	final String sql_joinIdCheck="SELECT MID FROM MEMBER WHERE MID=?";
-	final String sql_selectAll="SELECT * FROM (SELECT A.*,ROWNUM AS RNUM FROM (SELECT * FROM MEMBER ORDER BY ROWNUM DESC) A WHERE ROWNUM<=3) WHERE RNUM>=1";
+	final String sql_selectAll="SELECT * FROM (SELECT A.*,ROWNUM AS RNUM FROM (SELECT * FROM MEMBER ORDER BY MPK DESC) A WHERE ROWNUM<=3) WHERE RNUM>=1";
 	
 	public ArrayList<MemberVO> selectAll(MemberVO mvo){
 		ArrayList<MemberVO> datas=new ArrayList<MemberVO>();

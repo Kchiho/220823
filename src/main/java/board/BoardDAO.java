@@ -12,7 +12,8 @@ import util.JDBCUtil;
 public class BoardDAO {
 	Connection conn;
 	PreparedStatement pstmt;
-	final String sql_selectAll = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE MID LIKE '%'||?||'%' AND ROWNUM <= ?";
+	final String sql_selectAll = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE ROWNUM <= ?";
+	final String sql_selectAll_SB = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE MID = ? AND ROWNUM <= ?";
 	// LIMIT 은 MySQL
 	// Oracle 은 ROWNUM을 사용함
 	final String sql_selectAll_R = "SELECT * FROM REPLY WHERE BID = ? ORDER BY RID";
@@ -131,9 +132,14 @@ public class BoardDAO {
 		ArrayList<BoardSet> datas=new ArrayList<BoardSet>();
 		conn=JDBCUtil.connect();
 		try {
-			pstmt=conn.prepareStatement(sql_selectAll);
-			pstmt.setString(1, bvo.getMid());
-			pstmt.setInt(2, bvo.getCnt());
+			if(bvo.getMid() == "") {
+				pstmt=conn.prepareStatement(sql_selectAll);
+				pstmt.setInt(1, bvo.getCnt());			
+			}else {
+				pstmt=conn.prepareStatement(sql_selectAll_SB);
+				pstmt.setString(1, bvo.getMid());
+				pstmt.setInt(2, bvo.getCnt());			
+			}
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
 				BoardSet bs=new BoardSet();

@@ -6,6 +6,6 @@
 	최근에 가입한 회원이 없습니다.
 </c:if>
 	<tr>
-		<th><a href="main.do?mid=${datas.mid}&cnt=2&search=2">[${datas.mname}]&nbsp;</a></th>
+		<th><a href="main.do?mid=${datas.mid}&cnt=2&search=1">[${datas.mname}]&nbsp;</a></th>
 	</tr>
 </c:forEach>
