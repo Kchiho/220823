@@ -43,7 +43,6 @@ public class MainAction implements Action{
 		}else {
 			mvo.setSearch(Integer.parseInt(paramSearch));			
 		}
-		System.out.println(mvo);
 		ArrayList<BoardSet> datas=bdao.selectAll(bvo);
 		ArrayList<MemberVO> member = mdao.selectAll(mvo);
 		request.setAttribute("member", member);
