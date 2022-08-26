@@ -24,7 +24,7 @@ public class LoginAction implements Action{
 
 		vo = dao.selectOne(vo);
 		if(vo != null) {
-			session.setAttribute("mVO", vo);
+			session.setAttribute("mVO", vo); // 로그인한 회원정보
 			forward=new ActionForward();
 			forward.setPath("main.do?mid=&cnt="+Integer.parseInt(paramCnt));
 			forward.setRedirect(true);

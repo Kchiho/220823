@@ -5,7 +5,6 @@ public class MemberVO {
 	private String mid;
 	private String mpw;
 	private String mname;
-	private int search; // 검색시에만 사용 db 저장 xxx
 	public int getMpk() {
 		return mpk;
 	}
@@ -30,15 +29,9 @@ public class MemberVO {
 	public void setMname(String mname) {
 		this.mname = mname;
 	}
-	public int getSearch() {
-		return search;
-	}
-	public void setSearch(int search) {
-		this.search = search;
-	}
 	@Override
 	public String toString() {
-		return "MemberVO [mpk=" + mpk + ", mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + ", search=" + search
-				+ "]";
+		return "MemberVO [mpk=" + mpk + ", mid=" + mid + ", mpw=" + mpw + ", mname=" + mname + "]";
 	}
+
 }

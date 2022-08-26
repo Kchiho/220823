@@ -24,31 +24,27 @@ public class MainAction implements Action{
 		BoardVO bvo=new BoardVO();
 		String paramMid=request.getParameter("mid");
 		String paramCnt=request.getParameter("cnt");
-		String paramSearch=request.getParameter("search");
 		if(paramCnt==null || paramCnt.equals("")){
 			bvo.setCnt(2);
 		}
 		else {
 			bvo.setCnt(Integer.parseInt(paramCnt));
 		}
-		if(paramMid ==  null) {
+		if(paramMid == null) {
 			mvo.setMid("");
 			bvo.setMid("");
 		}else {
-			mvo.setMid(paramMid);		
+			mvo.setMid(paramMid);
 			bvo.setMid(paramMid);		
 		}
-		if(paramSearch == null) {
-			mvo.setSearch(0);
-		}else {
-			mvo.setSearch(Integer.parseInt(paramSearch));			
-		}
+
 		ArrayList<BoardSet> datas=bdao.selectAll(bvo);
 		ArrayList<MemberVO> member = mdao.selectAll(mvo);
+		
+		request.setAttribute("memberMidCheck", mvo.getMid());
 		request.setAttribute("member", member);
 		request.setAttribute("datas", datas);
 		request.setAttribute("cnt", bvo.getCnt());
-		request.setAttribute("search", mvo.getSearch());
 
 		forward=new ActionForward();
 		forward.setPath("/main.jsp");

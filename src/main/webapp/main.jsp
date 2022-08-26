@@ -41,7 +41,7 @@
 
 		<div id="main">
 			<h2>글 목록보기</h2>
-			<c:if test="${search == 1 || search == 2}">
+			<c:if test="${!memberMidCheck.equals('')}">
 				<c:if test="${datas.size() == 0}">작성한 글이 없습니다</c:if>
 			</c:if>
 			<c:forEach var="v" items="${datas}">
@@ -65,16 +65,16 @@
 				</div>
 			</c:forEach>
 		</div>
-		<c:if test="${search == 0}">
-			<c:if test="${datas.size()==cnt}">
-				<a href="main.do?cnt=${cnt+2}">더보기&gt;&gt;</a>
+			<c:if test="${memberMidCheck.equals('')}">
+				<c:if test="${datas.size()==cnt}">
+					<a href="main.do?cnt=${cnt+2}">더보기&gt;&gt;</a>
+				</c:if>
 			</c:if>
-		</c:if>
-		<c:if test="${search == 1}">
-			<c:if test="${datas.size()==cnt}">
-				<a href="main.do?mid=${b.mid}&cnt=${cnt+2}&search=1">더보기&gt;&gt;</a>
+			<c:if test="${!memberMidCheck.equals('')}">
+				<c:if test="${datas.size()==cnt}">
+					<a href="main.do?mid=${b.mid}&cnt=${cnt+2}">더보기&gt;&gt;</a>
+				</c:if>
 			</c:if>
-		</c:if>
 	</div>
 
 	<div id="footer">
