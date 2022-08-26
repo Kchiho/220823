@@ -12,12 +12,11 @@ import util.JDBCUtil;
 public class BoardDAO {
 	Connection conn;
 	PreparedStatement pstmt;
-	final String sql_selectAll = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE ROWNUM <= ?";
+	final String sql_selectAll = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE MID LIKE '%'||?||'%' AND ROWNUM <= ?";
 	// LIMIT 은 MySQL
 	// Oracle 은 ROWNUM을 사용함
-	final String sql_selectAllB = "SELECT * FROM BOARD WHERE MID = ? AND ROWNUM <= ? ORDER BY BID DESC";
-	final String sql_selectAllR = "SELECT * FROM REPLY WHERE MID = ? ORDER BY RID";
 	final String sql_selectAll_R = "SELECT * FROM REPLY WHERE BID = ? ORDER BY RID";
+	final String sql_selectAll_SR = "SELECT * FROM REPLY WHERE MID = ?";
 	final String sql_insert = "INSERT INTO BOARD(BID,MID,MSG) VALUES((SELECT NVL(MAX(BID),0) +1 FROM BOARD),?,?)";
 	final String sql_delete = "DELETE FROM BOARD WHERE BID = ?";
 	final String sql_insert_R = "INSERT INTO REPLY(RID,MID,BID,RMSG) VALUES((SELECT NVL(MAX(RID),0) +1 FROM REPLY),?,?,?)";
@@ -26,69 +25,6 @@ public class BoardDAO {
 	final String sql_updateR = "UPDATE BOARD SET RCNT = RCNT + 1 WHERE BID = ?";
 	final String sql_updateRd = "UPDATE BOARD SET RCNT = RCNT - 1 WHERE BID = ?";
 
-	public ArrayList<BoardSet> selectB(MemberVO mvo,BoardVO bvo){
-		ArrayList<BoardSet> datas=new ArrayList<BoardSet>();
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(sql_selectAllB);
-			pstmt.setString(1, mvo.getMid());
-			pstmt.setInt(2, bvo.getCnt());
-			ResultSet rs=pstmt.executeQuery();
-			while(rs.next()) {
-				BoardSet bs=new BoardSet();
-				
-				BoardVO boardVO=new BoardVO();
-				boardVO.setBid(rs.getInt("BID"));
-				boardVO.setMid(rs.getString("MID"));
-				boardVO.setMsg(rs.getString("MSG"));
-				boardVO.setFavcnt(rs.getInt("FAVCNT"));
-				boardVO.setRcnt(rs.getInt("RCNT"));
-				
-				bs.setBoardVO(boardVO);
-				ArrayList<ReplyVO> rList=new ArrayList<ReplyVO>();
-				pstmt=conn.prepareStatement(sql_selectAll_R);
-				pstmt.setInt(1, rs.getInt("BID")); // 현재 BID
-				ResultSet rs2=pstmt.executeQuery();
-				while(rs2.next()) {
-					ReplyVO replyVO=new ReplyVO();
-
-					replyVO.setBid(rs2.getInt("BID"));
-					replyVO.setMid(rs2.getString("MID"));
-					replyVO.setRid(rs2.getInt("RID"));
-					replyVO.setRmsg(rs2.getString("RMSG"));
-
-					rList.add(replyVO);
-				}
-				bs.setrList(rList);				
-
-				datas.add(bs);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return datas;
-	}
-	public ArrayList<ReplyVO> selectR(MemberVO mvo){
-		ArrayList<ReplyVO> datas=new ArrayList<ReplyVO>();
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(sql_selectAllR);
-			pstmt.setString(1, mvo.getMid());
-			ResultSet rs=pstmt.executeQuery();
-			while(rs.next()) {
-				ReplyVO replyVO=new ReplyVO();
-				replyVO.setBid(rs.getInt("BID"));
-				datas.add(replyVO);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
-		return datas;
-	}
 	public boolean insert(BoardVO bvo) {
 		conn=JDBCUtil.connect();
 		try {
@@ -196,7 +132,8 @@ public class BoardDAO {
 		conn=JDBCUtil.connect();
 		try {
 			pstmt=conn.prepareStatement(sql_selectAll);
-			pstmt.setInt(1, bvo.getCnt());
+			pstmt.setString(1, bvo.getMid());
+			pstmt.setInt(2, bvo.getCnt());
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
 				BoardSet bs=new BoardSet();
@@ -223,7 +160,7 @@ public class BoardDAO {
 
 					rList.add(replyVO);
 				}
-				bs.setrList(rList);				
+				bs.setrList(rList);
 
 				datas.add(bs);
 			}
@@ -234,4 +171,30 @@ public class BoardDAO {
 		}
 		return datas;
 	}
+	public ArrayList<ReplyVO> selectSR(ReplyVO vo){
+		ArrayList<ReplyVO> srList=new ArrayList<ReplyVO>();
+		conn=JDBCUtil.connect();
+		try {
+			pstmt=conn.prepareStatement(sql_selectAll_SR);
+			pstmt.setString(1, vo.getMid());
+			ResultSet rs=pstmt.executeQuery();
+			while(rs.next()) {
+				ReplyVO replyVO=new ReplyVO();
+
+				replyVO.setBid(rs.getInt("BID"));
+				replyVO.setMid(rs.getString("MID"));
+				replyVO.setRid(rs.getInt("RID"));
+				replyVO.setRmsg(rs.getString("RMSG"));
+
+				srList.add(replyVO);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCUtil.disconnect(pstmt, conn);
+		}
+		return srList;
+	}
 }
+

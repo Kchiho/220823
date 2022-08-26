@@ -7,7 +7,7 @@
 		<c:when test="${mVO.mid != null}">
 			<h1>${mVO.mname}님</h1>
 			<a href="logout.do">로그아웃</a>
-			<a href="search.do?mid=${mVO.mid}&cnt=2">내글보기</a>
+			<a href="main.do?mid=${mVO.mid}&cnt=2&search=1">내글보기</a>
 			<input type="button" value="탈퇴하기" onclick="delM()">
 		</c:when>
 		<c:otherwise>

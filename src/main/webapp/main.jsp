@@ -65,19 +65,19 @@
 				</div>
 			</c:forEach>
 		</div>
-		<c:if test="${search == null}">
+		<c:if test="${search == 0}">
 			<c:if test="${datas.size()==cnt}">
 				<a href="main.do?cnt=${cnt+2}">더보기&gt;&gt;</a>
 			</c:if>
 		</c:if>
 		<c:if test="${search == 1}">
 			<c:if test="${datas.size()==cnt}">
-				<a href="search.do?mid=${mVO.mid}&cnt=${cnt+2}">더보기&gt;&gt;</a>
+				<a href="main.do?mid=${mVO.mid}&cnt=${cnt+2}&search=1">더보기&gt;&gt;</a>
 			</c:if>
 		</c:if>
 		<c:if test="${search == 2}">
 			<c:if test="${datas.size()==cnt}">
-				<a href="search.do?mid=${b.mid}&cnt=${cnt+2}">더보기&gt;&gt;</a>
+				<a href="main.do?mid=${b.mid}&cnt=${cnt+2}&search=2">더보기&gt;&gt;</a>
 			</c:if>
 		</c:if>
 	</div>

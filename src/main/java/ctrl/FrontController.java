@@ -99,13 +99,6 @@ public class FrontController extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if(command.equals("/search.do")) {
-			try {
-				forward = new SearchAction().execute(request, response);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}else if(command.equals("/fav.do")) {
 			try {
 				forward = new FavAction().execute(request, response);

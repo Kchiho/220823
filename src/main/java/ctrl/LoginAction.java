@@ -26,7 +26,7 @@ public class LoginAction implements Action{
 		if(vo != null) {
 			session.setAttribute("mVO", vo);
 			forward=new ActionForward();
-			forward.setPath("main.do?cnt="+Integer.parseInt(paramCnt));
+			forward.setPath("main.do?mid=&cnt="+Integer.parseInt(paramCnt));
 			forward.setRedirect(true);
 		}else {
 			request.setAttribute("errormsg", "로그인실패");
