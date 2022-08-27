@@ -30,6 +30,7 @@ public class MainAction implements Action{
 		else {
 			bvo.setCnt(Integer.parseInt(paramCnt));
 		}
+		System.out.println("if문 전: "+paramMid);
 		if(paramMid == null) {
 			mvo.setMid("");
 			bvo.setMid("");
@@ -37,7 +38,7 @@ public class MainAction implements Action{
 			mvo.setMid(paramMid);
 			bvo.setMid(paramMid);		
 		}
-
+		System.out.println("if문 후"+bvo);
 		ArrayList<BoardSet> datas=bdao.selectAll(bvo);
 		ArrayList<MemberVO> member = mdao.selectAll(mvo);
 		
@@ -45,6 +46,7 @@ public class MainAction implements Action{
 		request.setAttribute("member", member);
 		request.setAttribute("datas", datas);
 		request.setAttribute("cnt", bvo.getCnt());
+		request.setAttribute("mid", paramMid);
 
 		forward=new ActionForward();
 		forward.setPath("/main.jsp");

@@ -4,10 +4,14 @@
 <%@ attribute name="type" %>
 <%@ attribute name="bid" %>
 <%@ attribute name="cnt" %>
+<%@ attribute name="mid" %>
 
 <c:if test="${mVO.mid != null}">
 <form action="insertB.do" method="post">
-	<input type="hidden" name="mid" value="${mVO.mid}">
+	<input type="hidden" name="sessionMid" value="${mVO.mid}">
+	<c:if test="${mid != null}">
+		<input type="hidden" name="mid" value="${mid}">
+	</c:if>
 	<input type="hidden" name="cnt" value="${cnt}">
 <c:choose>
 	<c:when test="${type=='msg'}">
@@ -23,7 +27,6 @@
 </c:choose>
 </form>
 </c:if>
-
 
 
 <c:if test="${mVO.mid == null}">

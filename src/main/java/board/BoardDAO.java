@@ -132,7 +132,7 @@ public class BoardDAO {
 		ArrayList<BoardSet> datas=new ArrayList<BoardSet>();
 		conn=JDBCUtil.connect();
 		try {
-			if(bvo.getMid().equals("")) {
+			if(bvo.getMid().equals("") || bvo.getMid().equals(null)) {
 				pstmt=conn.prepareStatement(sql_selectAll);
 				pstmt.setInt(1, bvo.getCnt());			
 			}else {

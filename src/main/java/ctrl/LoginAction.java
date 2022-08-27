@@ -15,18 +15,19 @@ public class LoginAction implements Action{
 		ActionForward forward = null;
 		MemberVO vo = new MemberVO();
 		MemberDAO dao = new MemberDAO();
-		String paramMid=request.getParameter("mid");
+		String paramMid=request.getParameter("sessionMid");
 		String paramMpw=request.getParameter("mpw");
 		String paramCnt=request.getParameter("cnt");
 
 		vo.setMid(paramMid);
 		vo.setMpw(paramMpw);
 
+		request.setAttribute("cnt", paramCnt);
 		vo = dao.selectOne(vo);
 		if(vo != null) {
 			session.setAttribute("mVO", vo); // 로그인한 회원정보
 			forward=new ActionForward();
-			forward.setPath("main.do?mid=&cnt="+Integer.parseInt(paramCnt));
+			forward.setPath("main.do");
 			forward.setRedirect(true);
 		}else {
 			request.setAttribute("errormsg", "로그인실패");

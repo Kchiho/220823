@@ -19,12 +19,14 @@ public class DeleteBoardAction implements Action{
 		String paramCnt=request.getParameter("cnt");
 		String paramRid=request.getParameter("rid");
 		String paramBid=request.getParameter("bid");
+		
+		request.setAttribute("cnt", paramCnt);
 
 		if(paramRid == null) {
 			bvo.setBid(Integer.parseInt(paramBid));
 			if(bdao.delete(bvo)) {
 				forward=new ActionForward();
-				forward.setPath("main.do?cnt="+Integer.parseInt(paramCnt));
+				forward.setPath("main.do");
 				forward.setRedirect(true);
 			}else {
 				request.setAttribute("errormsg", "게시글 삭제 실패");
@@ -34,7 +36,7 @@ public class DeleteBoardAction implements Action{
 			rvo.setRid(Integer.parseInt(paramRid));
 			if(bdao.deleteR(rvo) & bdao.updateRd(rvo)) {
 				forward=new ActionForward();
-				forward.setPath("main.do?cnt="+Integer.parseInt(paramCnt));
+				forward.setPath("main.do");
 				forward.setRedirect(false);
 			}else {
 				request.setAttribute("errormsg", "댓글 삭제 실패");

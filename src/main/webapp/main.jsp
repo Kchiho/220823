@@ -55,13 +55,13 @@
 					<ul>
 						<c:forEach var="r" items="${v.rList}">
 							<li>[${r.mid}] ${r.rmsg} <kim:reply midCheck="${r.mid}"
-									rid="${r.rid}" bid="${r.bid}" cnt="${cnt}" /></li>
+									rid="${r.rid}" bid="${r.bid}" cnt="${cnt}"/></li>
 						</c:forEach>
 					</ul>
 				</div>
 
 				<div class="reply">
-					<kim:write type="rmsg" bid="${b.bid}" cnt="${cnt}" />
+					<kim:write type="rmsg" bid="${b.bid}" cnt="${cnt}" mid="${mid}"/>
 				</div>
 			</c:forEach>
 		</div>

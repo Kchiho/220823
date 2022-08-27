@@ -16,9 +16,10 @@ public class FavAction implements Action{
 		String paramBid=request.getParameter("bid");
 		String paramCnt=request.getParameter("cnt");
 		vo.setBid(Integer.parseInt(paramBid));
+		request.setAttribute("cnt", paramCnt);
 		if(dao.update(vo)) {
 			forward=new ActionForward();
-			forward.setPath("main.do?cnt="+Integer.parseInt(paramCnt));
+			forward.setPath("main.do");
 			forward.setRedirect(false);
 		}else {
 			request.setAttribute("errormsg", "추천실패");
