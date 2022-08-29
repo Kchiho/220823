@@ -20,31 +20,37 @@ public class InsertBoardAction implements Action{
 		String paramMsg=request.getParameter("msg");
 		//System.out.println("insertAcion: "+request.getParameter("mid"));
 		int paramCnt=Integer.parseInt(request.getParameter("cnt"));
+		
 		//System.out.println(paramMid);
 		bvo.setMid(paramMid);
 		rvo.setMid(paramMid);
 
-		if(paramMsg != null) {
+		if(paramMsg != null) { // 게시글 추가
 			bvo.setMsg(paramMsg);
+			
 			if(bdao.insert(bvo)) {
 				forward=new ActionForward();
 				forward.setPath("main.do");
 				forward.setRedirect(true);
-			}else {
+			}
+			else {
 				request.setAttribute("errormsg", "게시글 추가 실패");
 			}
-		}else {
+		}
+		else { // 댓글 추가
 			String paramRmsg=request.getParameter("rmsg");
 			String paramBid=request.getParameter("bid");
 			rvo.setRmsg(paramRmsg);
 			rvo.setBid(Integer.parseInt(paramBid));
+			
 			if(bdao.insertR(rvo) & bdao.updateR(rvo)) {
 				request.setAttribute("cnt", paramCnt);
 				request.setAttribute("mid", request.getParameter("mid"));
 				forward=new ActionForward();
 				forward.setPath("main.do");
 				forward.setRedirect(false);
-			}else {
+			}
+			else {
 				request.setAttribute("errormsg", "댓글 추가 or 댓글 수 증가 실패");
 			}
 		}	

@@ -22,13 +22,15 @@ public class InsertMemberAction implements Action{
 		vo.setMpw(paramMpw);
 		vo.setMname(paramMname);
 		//System.out.println("로그1");
-		if(dao.insert(vo)) {
+		
+		if(dao.insert(vo)) { // 회원가입
 			//System.out.println("로그2");
 			//System.out.println(vo);
 			forward=new ActionForward();
 			forward.setPath("/close.jsp");
 			forward.setRedirect(false);
-		}else {
+		}
+		else {
 			request.setAttribute("errormsg", "회원가입실패");
 		}
 		return forward;

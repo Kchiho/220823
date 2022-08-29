@@ -115,19 +115,19 @@ public class FrontController extends HttpServlet {
 		}
 
 		//System.out.println("로그f1");
-		if(forward==null) {
+		if(forward==null) { // forward == null 이면 에러발생
 			//System.out.println("로그f2");
 			forward=new ActionForward();
 			forward.setPath("error/error.jsp");
 			forward.setRedirect(false);
 			RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
 			dispatcher.forward(request, response);
-		}else{
+		}else{ // 에러 발생이 아닐 시
 			//System.out.println("로그f3");
-			if(forward.isRedirect()) {		
+			if(forward.isRedirect()) { // 새로운 요청을 한다.	
 				response.sendRedirect(forward.getPath());
 			}
-			else {
+			else { // 기존 요청 정보를 유지
 				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
 				dispatcher.forward(request, response);
 			}

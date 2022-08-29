@@ -7,8 +7,8 @@ public class BoardSet {
 	// 글 1개 + 댓글 N개
 	// JAVA에서 사용할 VO를 자체제작
 	
-	private BoardVO boardVO;
-	private ArrayList<ReplyVO> rList =new ArrayList<ReplyVO>();
+	private BoardVO boardVO; // 게시글
+	private ArrayList<ReplyVO> rList =new ArrayList<ReplyVO>(); // 게시글에 대한 댓글
 	
 	public BoardVO getBoardVO() {
 		return boardVO;

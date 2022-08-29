@@ -12,6 +12,7 @@ public class DeleteBoardAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = null;
+		
 		BoardDAO bdao=new BoardDAO();
 		BoardVO bvo=new BoardVO();
 		ReplyVO rvo=new ReplyVO();
@@ -20,8 +21,9 @@ public class DeleteBoardAction implements Action{
 		String paramRid=request.getParameter("rid");
 		String paramBid=request.getParameter("bid");
 		
-		if(paramRid == null) {
+		if(paramRid == null) { // 게시글 삭제시 
 			bvo.setBid(Integer.parseInt(paramBid));
+			
 			if(bdao.delete(bvo)) {
 				forward=new ActionForward();
 				forward.setPath("main.do");
@@ -29,15 +31,19 @@ public class DeleteBoardAction implements Action{
 			}else {
 				request.setAttribute("errormsg", "게시글 삭제 실패");
 			}
-		}else {
+		}
+		else { // 댓글 삭제시
 			rvo.setBid(Integer.parseInt(paramBid));
 			rvo.setRid(Integer.parseInt(paramRid));
+			
 			if(bdao.deleteR(rvo) & bdao.updateRd(rvo)) {
+				// 댓글 삭제 && 댓글 수 1 감소
 				request.setAttribute("cnt", paramCnt);
 				forward=new ActionForward();
 				forward.setPath("main.do");
 				forward.setRedirect(false);
-			}else {
+			}
+			else {
 				request.setAttribute("errormsg", "댓글 삭제 실패");
 			}
 		}

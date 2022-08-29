@@ -12,10 +12,15 @@ public class MemberDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	final String sql_selectOne="SELECT * FROM MEMBER WHERE MID=? AND MPW=?";
+	// 로그인
 	final String sql_insert="INSERT INTO MEMBER VALUES((SELECT NVL(MAX(MPK),0) +1 FROM MEMBER),?,?,?)";
+	// 회원가입
 	final String sql_delete="DELETE FROM MEMBER WHERE MID=?";
+	// 회원탈퇴
 	final String sql_joinIdCheck="SELECT MID FROM MEMBER WHERE MID=?";
+	// 아이디 중복검사
 	final String sql_selectAll="SELECT * FROM (SELECT A.*,ROWNUM AS RNUM FROM (SELECT * FROM MEMBER ORDER BY MPK DESC) A WHERE ROWNUM<=3) WHERE RNUM>=1";
+	// 최근 가입한 3명 조회
 	
 	public ArrayList<MemberVO> selectAll(MemberVO mvo){
 		ArrayList<MemberVO> datas=new ArrayList<MemberVO>();
@@ -43,9 +48,9 @@ public class MemberDAO {
 			pstmt=conn.prepareStatement(sql_joinIdCheck);
 			pstmt.setString(1, id);
 			ResultSet rs=pstmt.executeQuery();
-			if(rs.next()){	
+			if(rs.next()){ // 중복있음
 				result = 0;
-			}else{
+			}else{ // 중복없음
 				result = 1;
 			}
 		} catch (SQLException e) {

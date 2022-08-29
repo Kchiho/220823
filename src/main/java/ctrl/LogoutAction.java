@@ -9,7 +9,7 @@ public class LogoutAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session=request.getSession();
-		session.invalidate();
+		session.invalidate(); // 세션 정보 삭제
 		
 		ActionForward forward=new ActionForward();
 		forward.setPath("main.do");

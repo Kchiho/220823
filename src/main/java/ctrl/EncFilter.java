@@ -37,6 +37,7 @@ public class EncFilter extends HttpFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		// *.do 요청시 실행
 		request.setCharacterEncoding(this.encoding);
 
 		// pass the request along the filter chain
@@ -46,7 +47,7 @@ public class EncFilter extends HttpFilter implements Filter {
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException {
+	public void init(FilterConfig fConfig) throws ServletException { // 필터 실행시 최초 1회 실행
 		this.encoding=fConfig.getServletContext().getInitParameter("encoding");
 	}
 

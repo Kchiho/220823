@@ -16,28 +16,34 @@ public class DeleteMemberAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//System.out.println("로그1");
 		ActionForward forward = null;
+		
 		BoardDAO bdao=new BoardDAO();
 		BoardVO bvo = new BoardVO();
 		MemberVO mvo = new MemberVO();
 		MemberDAO mdao = new MemberDAO();
 		ReplyVO rvo = new ReplyVO();
+		
 		String paramMid=request.getParameter("sessionMid");
+		
 		mvo.setMid(paramMid);
 		bvo.setMid(paramMid);
 		rvo.setMid(paramMid);
 		bvo.setCnt(2);
-		if(bdao.selectAll(bvo).size() != 0) {
+		
+		if(bdao.selectAll(bvo).size() != 0) { // 로그인한 계정 기준 작성한 게시글이 남아있다면
 			//System.out.println("로그2");
 			request.setAttribute("errormsg", "게시글이 남아있습니다");
-		}else {
-			if(bdao.selectSR(rvo).size() != 0) {
+		}
+		else {
+			if(bdao.selectSR(rvo).size() != 0) { // 로그인한 계정 기준 작성한 댓글이 남아있다면
 				//System.out.println("로그3");
 				request.setAttribute("errormsg", "댓글이 남아있습니다");
-			}else {
+			}
+			else { // 로그인한 계정 기준 작성한 것이 없다면
 				if(mdao.delete(mvo)) {
 					//System.out.println("로그4");
 					HttpSession session=request.getSession();
-					session.invalidate();
+					session.invalidate(); // 세션정보를 지움
 					forward=new ActionForward();
 					forward.setPath("main.do");
 					forward.setRedirect(true);

@@ -12,19 +12,32 @@ public class BoardDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	final String sql_selectAll = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE ROWNUM <= ?";
+	// cnt만큼 board 테이블에서 데이터를 bid 내림차순으로 조회
 	final String sql_selectAll_SB = "SELECT * FROM (SELECT * FROM BOARD ORDER BY BID DESC) WHERE MID = ? AND ROWNUM <= ?";
+	// cnt만큼 board 테이블에서 mid=?인 데이터를 bid 내림차순으로 조회
+	
 	// LIMIT 은 MySQL
 	// Oracle 은 ROWNUM을 사용함
+	
 	final String sql_selectAll_R = "SELECT * FROM REPLY WHERE BID = ? ORDER BY RID";
+	// reply 테이블에서 bid=?인 전체 데이터를 rid순으로 조회 
 	final String sql_selectAll_SR = "SELECT * FROM REPLY WHERE MID = ?";
+	// reply 테이블에서 mid=?인 전체 데이터를 조회
 	final String sql_insert = "INSERT INTO BOARD(BID,MID,MSG) VALUES((SELECT NVL(MAX(BID),0) +1 FROM BOARD),?,?)";
+	// 글 쓰기
 	final String sql_delete = "DELETE FROM BOARD WHERE BID = ?";
+	// 글 삭제
 	final String sql_insert_R = "INSERT INTO REPLY(RID,MID,BID,RMSG) VALUES((SELECT NVL(MAX(RID),0) +1 FROM REPLY),?,?,?)";
+	// 댓글 쓰기
 	final String sql_delete_R = "DELETE FROM REPLY WHERE RID = ?";
+	// 댓글 삭제 
 	final String sql_updateF = "UPDATE BOARD SET FAVCNT = FAVCNT + 1 WHERE BID = ?";
+	// 좋아요 1 증가
 	final String sql_updateR = "UPDATE BOARD SET RCNT = RCNT + 1 WHERE BID = ?";
+	// 댓글 1 증가
 	final String sql_updateRd = "UPDATE BOARD SET RCNT = RCNT - 1 WHERE BID = ?";
-
+	// 댓글 1 감소
+	
 	public boolean insert(BoardVO bvo) {
 		conn=JDBCUtil.connect();
 		try {
@@ -131,10 +144,10 @@ public class BoardDAO {
 		ArrayList<BoardSet> datas=new ArrayList<BoardSet>();
 		conn=JDBCUtil.connect();
 		try {
-			if(bvo.getMid().equals("") || bvo.getMid().equals(null)) {
+			if(bvo.getMid().equals("") || bvo.getMid().equals(null)) { // 전체조회
 				pstmt=conn.prepareStatement(sql_selectAll);
 				pstmt.setInt(1, bvo.getCnt());			
-			}else {
+			}else { // 특정 회원 조회
 				pstmt=conn.prepareStatement(sql_selectAll_SB);
 				pstmt.setString(1, bvo.getMid());
 				pstmt.setInt(2, bvo.getCnt());			

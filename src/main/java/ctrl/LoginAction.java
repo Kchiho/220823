@@ -13,8 +13,10 @@ public class LoginAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		ActionForward forward = null;
+		
 		MemberVO vo = new MemberVO();
 		MemberDAO dao = new MemberDAO();
+		
 		String paramMid=request.getParameter("sessionMid");
 		String paramMpw=request.getParameter("mpw");
 		String paramCnt=request.getParameter("cnt");
@@ -24,12 +26,14 @@ public class LoginAction implements Action{
 
 		request.setAttribute("cnt", paramCnt);
 		vo = dao.selectOne(vo);
-		if(vo != null) {
+		
+		if(vo != null) { // 로그인
 			session.setAttribute("mVO", vo); // 로그인한 회원정보
 			forward=new ActionForward();
 			forward.setPath("main.do");
 			forward.setRedirect(false);
-		}else {
+		}
+		else {
 			request.setAttribute("errormsg", "로그인실패");
 		}
 		return forward;
