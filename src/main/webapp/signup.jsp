@@ -12,10 +12,10 @@
 		<table border="1">
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" name="mid" /> <input type="button"
-					value="중복확인" class="dup" onclick="winopen()"></td>
+				<td><input type="text" name="mid" onkeydown="inputIdChk()"/> <input type="button"
+					value="중복확인" class="dup" name="dbCheckId" onclick="winopen()"></td>
 				<!-- 아이디 중복 체크 여부 -->
-
+				<td><input type="hidden" name="idDuplication" value="idUncheck"></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
@@ -51,7 +51,7 @@
 				return false;
 			}
 
-			if (!form.name.value) {
+			if (!form.mname.value) {
 				alert("이름을 입력하세요.");
 				return false;
 			}
@@ -74,6 +74,11 @@
 		}
 		function reload() {
 			opener.location.reload();
+		}
+		function inputIdChk(){
+			opener.document.userInfo.dbCheckId.disabled=false;
+			opener.document.userInfo.idDuplication.value="idUnCheck";
+			opener.document.userInfo.dbCheckId.style.cursor="pointer";
 		}
 	</script>
 

@@ -34,10 +34,10 @@
 			//alert("팝업창의 id값"+document.wfr.userid.value + ", 회원가입창의 id값 : " +opener.document.fr.id.value)
 			//6-1. 회원가입페이지의 id값에 아이디중복으로 선택된 id값을 대입.
 			opener.document.userInfo.mid.value = document.mid.mid.value;
-
+			opener.document.userInfo.idDuplication.value="idCheck";
 			//6-3. 회원가입창 제어
-			//readonly 속성제어(커멜표기가 아닐때는 제어가 안됨 신기하네 ㅋㅋㅋ)
-			opener.document.userInfo.mid.readOnly = true;
+			opener.document.userInfo.dbCheckId.disabled=true;
+			opener.document.userInfo.dbCheckId.style.cursor="default";
 
 			//6-2. 창닫기
 			window.close();
