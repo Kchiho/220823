@@ -21,10 +21,10 @@ public class InsertMemberAction implements Action{
 		vo.setMid(paramMid);
 		vo.setMpw(paramMpw);
 		vo.setMname(paramMname);
-		System.out.println("로그1");
+		//System.out.println("로그1");
 		if(dao.insert(vo)) {
-			System.out.println("로그2");
-			System.out.println(vo);
+			//System.out.println("로그2");
+			//System.out.println(vo);
 			forward=new ActionForward();
 			forward.setPath("/close.jsp");
 			forward.setRedirect(false);
