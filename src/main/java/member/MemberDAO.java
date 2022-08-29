@@ -83,7 +83,10 @@ public class MemberDAO {
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getMpw());
 			pstmt.setString(3, vo.getMname());
-			pstmt.executeUpdate();
+			int res = pstmt.executeUpdate();
+			if(res > 0) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

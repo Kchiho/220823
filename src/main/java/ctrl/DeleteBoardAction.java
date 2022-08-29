@@ -20,8 +20,6 @@ public class DeleteBoardAction implements Action{
 		String paramRid=request.getParameter("rid");
 		String paramBid=request.getParameter("bid");
 		
-		request.setAttribute("cnt", paramCnt);
-
 		if(paramRid == null) {
 			bvo.setBid(Integer.parseInt(paramBid));
 			if(bdao.delete(bvo)) {
@@ -35,6 +33,7 @@ public class DeleteBoardAction implements Action{
 			rvo.setBid(Integer.parseInt(paramBid));
 			rvo.setRid(Integer.parseInt(paramRid));
 			if(bdao.deleteR(rvo) & bdao.updateRd(rvo)) {
+				request.setAttribute("cnt", paramCnt);
 				forward=new ActionForward();
 				forward.setPath("main.do");
 				forward.setRedirect(false);

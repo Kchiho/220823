@@ -11,8 +11,8 @@
 			<input type="button" value="탈퇴하기" onclick="delM()">
 		</c:when>
 		<c:otherwise>
-		ID&nbsp;<input type="text" name="sessionMid">&nbsp;&nbsp;PW&nbsp;<input
-				type="password" name="mpw">&nbsp;&nbsp;
+		ID&nbsp;<input type="text" name="sessionMid" required>&nbsp;&nbsp;PW&nbsp;<input
+				type="password" name="mpw" required>&nbsp;&nbsp;
 		<input type="submit" value="로그인">
 			<li style="list-style: none;"><a href="javascript:signup()">회원가입</a></li>
 		</c:otherwise>

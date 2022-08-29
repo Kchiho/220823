@@ -114,14 +114,24 @@ public class FrontController extends HttpServlet {
 			}
 		}
 
+		//System.out.println("로그f1");
 		if(forward==null) {
+			//System.out.println("로그f2");
 			forward=new ActionForward();
 			forward.setPath("error/error.jsp");
 			forward.setRedirect(false);
+			RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
+			dispatcher.forward(request, response);
+		}else{
+			//System.out.println("로그f3");
+			if(forward.isRedirect()) {		
+				response.sendRedirect(forward.getPath());
+			}
+			else {
+				RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
+				dispatcher.forward(request, response);
+			}
 		}
-
-		RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
-		dispatcher.forward(request, response);
 		// : 타겟페이지(인자)로 request,response 객체를 전달하는 메서드
 		// : 제어권을 넘겨줌 -> 클라이언트가 응답을 확인할 수 있음	
 

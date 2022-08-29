@@ -28,7 +28,7 @@ public class LoginAction implements Action{
 			session.setAttribute("mVO", vo); // 로그인한 회원정보
 			forward=new ActionForward();
 			forward.setPath("main.do");
-			forward.setRedirect(true);
+			forward.setRedirect(false);
 		}else {
 			request.setAttribute("errormsg", "로그인실패");
 		}

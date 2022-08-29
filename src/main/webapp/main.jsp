@@ -13,7 +13,7 @@
 		window.open("signup.jsp", "회원가입 페이지", "width=500,height=200");
 	}
 	function delM() {
-		location.href = "deleteM.do?mid=${mVO.mid}";
+		location.href = "deleteM.do?sessionMid=${mVO.mid}";
 	}
 </script>
 </head>
