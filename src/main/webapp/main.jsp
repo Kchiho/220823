@@ -27,7 +27,7 @@
 			</ul>
 		</div>
 		<div>
-			<span>최근 가입한 회원</span>
+			<span>최근 가입한 회원</span> <br>
 			<kim:search />
 		</div>
 	</div>
