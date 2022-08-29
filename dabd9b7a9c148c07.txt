@@ -103,23 +103,44 @@ public class EncFilter extends HttpFilter implements Filter {
         this.encoding=fConfig.getServletContext().getInitParameter("encoding");
 	//==web.xml에서 encoding의 value
     }
+
  	// 초기화 파라미터 에서 인코딩 정보 가져와서 설정.
    	// Filter 초기화로 한 번만 호출한다. 여기서는 web.xml의 초기화 매개변수에
     	// 'encoding'으로 설정된 값을 문자열 변수 encoding에 저장한다.
     	// 이후 실제 필터 적용은 doFilter()에 의해 이루어진다.
+
 }
+
+서블릿에서 PrintWriter와 같은 클래스을 통해 한글을 입력하여 jsp 파일로 내보내는 경우, 
+그리고 폼 태그에서 입력한 값이 서블릿으로 넘어올 경우에 인코딩 설정이 되어 있지 않으면 한글이 정상적으로 출력되지 않습니다. 
+
+아래와 같이 서블릿의 메소드 시작 부분에 인코딩 설정을 해주면 정상적으로 출력됩니다.
+response.setContentType("text/html; charset=UTF-8");
+
 [[ 3 ]]
 
 [FrontController]
-	if(forward==null) { // 정상적인 요청이 수행되지 않은 경우
-            forward=new ActionForward();
-            forward.setPath("error/error.jsp"); //error.jsp 페이지로 이동
-            forward.setRedirect(false);
-        }
-	RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());
-        dispatcher.forward(request, response);
-	// 타겟페이지로 request, response객체를 전달
-	// 제어권을 넘겨줌 -> 클라이언트가 응답 확인 가능
+
+if(forward==null) { // forward == null 이면 에러발생
+	//System.out.println("로그f2");
+	forward=new ActionForward();
+	forward.setPath("error/error.jsp");
+	forward.setRedirect(false);
+	RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
+	dispatcher.forward(request, response);
+}else{ // 에러 발생이 아닐 시
+	//System.out.println("로그f3");
+	if(forward.isRedirect()) { // 새로운 요청을 한다.	
+		response.sendRedirect(forward.getPath());
+	}
+	else { // 기존 요청 정보를 유지
+	RequestDispatcher dispatcher=request.getRequestDispatcher(forward.getPath());	
+	dispatcher.forward(request, response);
+	}
+}
+// : 타겟페이지(인자)로 request,response 객체를 전달하는 메서드
+// : 제어권을 넘겨줌 -> 클라이언트가 응답을 확인할 수 있음	
+
 
 ex)
 [InsertMemberAction]
@@ -157,9 +178,9 @@ serach.tag => 최근에 가입한 회원 3명 표시, 검색 기능 구현
 write.tag => (로그인 상태를 구분하여 로그인이 되어 있을 때에만) 게시글 작성, 댓글 작성 기능
 
 [[ 5 ]]
-사용하려는 태그를 WEB-INF > tags 폴더로 관리하였다.
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-다른 사람(자바)이 만든 커스텀 태그 셋팅하여 커스텀태그를 생성할 때 사용하였다.
+jsp에서 자주 사용하는 기능을 미리 구현해 놓은 커스텀 태그 라이브러리 모음이다.
+반복문 제어 foreach / 복합조건문제어 (if~else, switch) choose when otherwise / 조건문제어 if / 저장영역에 객체를저장 set
 
 EL식 = ${표현식}
 view에서 주로 사용 => ${변수명} or ${객체명.변수명} or ${컬렉션객체[인덱스]}로 사용
@@ -170,6 +191,8 @@ view에서 주로 사용 => ${변수명} or ${객체명.변수명} or ${컬렉�
 MVC2 방식을 설명하라는 것 같음
 
 [FrontController]
+
+공통 처리가 어려운 것이 문제
 
 FrontController(이후 FC)를 통해서 관리하였다.
 이는 기존에 Controller가 jsp였던것에 비해 서블릿 파일이다.
