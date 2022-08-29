@@ -22,30 +22,42 @@ public class MainAction implements Action{
 		MemberDAO mdao = new MemberDAO();
 		BoardDAO bdao=new BoardDAO();
 		BoardVO bvo=new BoardVO();
+		boolean flag = true;
+		int cnt;
+		
 		String paramMid=request.getParameter("mid");
 		String paramCnt=request.getParameter("cnt");
+		
 		if(paramCnt==null || paramCnt.equals("")){
-			bvo.setCnt(2);
+			cnt=2;
+			bvo.setCnt(cnt);
 		}
 		else {
+			cnt=Integer.parseInt(paramCnt);
 			bvo.setCnt(Integer.parseInt(paramCnt));
 		}
-		System.out.println("if문 전: "+paramMid);
+		//System.out.println("if문 전: "+paramMid);
 		if(paramMid == null) {
-			mvo.setMid("");
 			bvo.setMid("");
 		}else {
-			mvo.setMid(paramMid);
 			bvo.setMid(paramMid);		
 		}
-		System.out.println("if문 후"+bvo);
+		//System.out.println("if문 후"+bvo);
 		ArrayList<BoardSet> datas=bdao.selectAll(bvo);
+		bvo.setCnt(cnt+1);
+		ArrayList<BoardSet> datasNext=bdao.selectAll(bvo);
+
+		if(datas.size() == datasNext.size()) {
+			flag = false;
+		}
+		request.setAttribute("more", flag);
+
 		ArrayList<MemberVO> member = mdao.selectAll(mvo);
-		
-		request.setAttribute("memberMidCheck", mvo.getMid());
+
+		request.setAttribute("boardMidCheck", bvo.getMid());
 		request.setAttribute("member", member);
 		request.setAttribute("datas", datas);
-		request.setAttribute("cnt", bvo.getCnt());
+		request.setAttribute("cnt", cnt);
 		request.setAttribute("mid", paramMid);
 
 		forward=new ActionForward();

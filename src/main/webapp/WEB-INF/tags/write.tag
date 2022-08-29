@@ -3,8 +3,6 @@
 
 <%@ attribute name="type" %>
 <%@ attribute name="bid" %>
-<%@ attribute name="cnt" %>
-<%@ attribute name="mid" %>
 
 <c:if test="${mVO.mid != null}">
 <form action="insertB.do" method="post">
@@ -15,13 +13,13 @@
 	<input type="hidden" name="cnt" value="${cnt}">
 <c:choose>
 	<c:when test="${type=='msg'}">
-		<input type="text" name="msg">
+		<input type="text" name="msg" required>
 		<input type="submit" value="글 등록">
 	</c:when>
 	
 	<c:when test="${type=='rmsg'}">
 		<input type="hidden" name="bid" value="${bid}">
-		댓글: <input type="text" name="rmsg">
+		댓글: <input type="text" name="rmsg" required>
 		<input type="submit" value="댓글 등록">
 	</c:when>
 </c:choose>

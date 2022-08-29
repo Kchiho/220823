@@ -2,7 +2,6 @@ package ctrl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import board.BoardDAO;
 import board.BoardVO;
@@ -19,9 +18,9 @@ public class InsertBoardAction implements Action{
 
 		String paramMid=request.getParameter("sessionMid");
 		String paramMsg=request.getParameter("msg");
-		System.out.println("insertAcion: "+request.getParameter("mid"));
+		//System.out.println("insertAcion: "+request.getParameter("mid"));
 		int paramCnt=Integer.parseInt(request.getParameter("cnt"));
-		System.out.println(paramMid);
+		//System.out.println(paramMid);
 		bvo.setMid(paramMid);
 		rvo.setMid(paramMid);
 

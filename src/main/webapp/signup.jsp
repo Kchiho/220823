@@ -14,6 +14,8 @@
 				<td>아이디</td>
 				<td><input type="text" name="mid" /> <input type="button"
 					value="중복확인" class="dup" onclick="winopen()"></td>
+				<!-- 아이디 중복 체크 여부 -->
+
 			</tr>
 			<tr>
 				<td>비밀번호</td>
@@ -34,7 +36,7 @@
 		function checkValue() {
 			var form = document.userInfo;
 
-			if (!form.sessionMid.value) {
+			if (!form.mid.value) {
 				alert("아이디를 입력하세요.");
 				return false;
 			}
@@ -70,8 +72,8 @@
 						"width=500, height=300");
 			}
 		}
-		function reload(){
-			  opener.location.reload();
+		function reload() {
+			opener.location.reload();
 		}
 	</script>
 

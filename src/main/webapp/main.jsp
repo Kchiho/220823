@@ -36,7 +36,7 @@
 		<div></div>
 		<div id="content">
 			<h2>글 등록하기</h2>
-			<kim:write type="msg" cnt="${cnt}" />
+			<kim:write type="msg" />
 		</div>
 
 		<div id="main">
@@ -48,30 +48,30 @@
 				<c:set var="b" value="${v.boardVO}" />
 				<h3>
 					[${b.mid}] ${b.msg} [ 좋아요 ${b.favcnt} | 댓글 ${b.rcnt} ]
-					<kim:board midCheck="${b.mid}" bid="${b.bid}" cnt="${cnt}" />
+					<kim:board midCheck="${b.mid}" bid="${b.bid}"/>
 				</h3>
 
 				<div class="reply">
 					<ul>
 						<c:forEach var="r" items="${v.rList}">
 							<li>[${r.mid}] ${r.rmsg} <kim:reply midCheck="${r.mid}"
-									rid="${r.rid}" bid="${r.bid}" cnt="${cnt}"/></li>
+									rid="${r.rid}" bid="${r.bid}" /></li>
 						</c:forEach>
 					</ul>
 				</div>
 
 				<div class="reply">
-					<kim:write type="rmsg" bid="${b.bid}" cnt="${cnt}" mid="${mid}"/>
+					<kim:write type="rmsg" bid="${b.bid}"/>
 				</div>
 			</c:forEach>
 		</div>
-			<c:if test="${memberMidCheck.equals('')}">
-				<c:if test="${datas.size()==cnt}">
+			<c:if test="${boardMidCheck.equals('')}">
+				<c:if test="${more==true}">
 					<a href="main.do?cnt=${cnt+2}">더보기&gt;&gt;</a>
 				</c:if>
 			</c:if>
-			<c:if test="${!memberMidCheck.equals('')}">
-				<c:if test="${datas.size()==cnt}">
+			<c:if test="${!boardMidCheck.equals('')}">
+				<c:if test="${more==true}">
 					<a href="main.do?mid=${b.mid}&cnt=${cnt+2}">더보기&gt;&gt;</a>
 				</c:if>
 			</c:if>

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import member.MemberVO;
 import util.JDBCUtil;
 
 public class BoardDAO {
