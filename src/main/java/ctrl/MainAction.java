@@ -59,7 +59,7 @@ public class MainAction implements Action{
 		request.setAttribute("member", member);
 		request.setAttribute("datas", datas);
 		request.setAttribute("cnt", cnt);
-		request.setAttribute("mid", paramMid);
+		//request.setAttribute("mid", paramMid);
 
 		forward=new ActionForward();
 		forward.setPath("/main.jsp");

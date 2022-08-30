@@ -13,7 +13,7 @@ import javax.servlet.http.HttpFilter;
 /**
  * Servlet Filter implementation class EncFilter
  */
-@WebFilter("*.do")
+@WebFilter({"*.do" , "*.jsp"})
 public class EncFilter extends HttpFilter implements Filter {
        
 	private String encoding;
@@ -39,6 +39,7 @@ public class EncFilter extends HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// *.do 요청시 실행
 		request.setCharacterEncoding(this.encoding);
+		response.setCharacterEncoding(this.encoding);
 
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

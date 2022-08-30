@@ -48,7 +48,7 @@
 				<c:set var="b" value="${v.boardVO}" />
 				<h3>
 					[${b.mid}] ${b.msg} [ 좋아요 ${b.favcnt} | 댓글 ${b.rcnt} ]
-					<kim:board midCheck="${b.mid}" bid="${b.bid}"/>
+					<kim:board midCheck="${b.mid}" bid="${b.bid}" />
 				</h3>
 
 				<div class="reply">
@@ -61,20 +61,22 @@
 				</div>
 
 				<div class="reply">
-					<kim:write type="rmsg" bid="${b.bid}"/>
+					<kim:write type="rmsg" bid="${b.bid}" />
 				</div>
 			</c:forEach>
 		</div>
+		<!-- 
 			<c:if test="${boardMidCheck.equals('')}">
 				<c:if test="${more==true}">
 					<a href="main.do?cnt=${cnt+2}">더보기&gt;&gt;</a>
 				</c:if>
 			</c:if>
 			<c:if test="${!boardMidCheck.equals('')}">
-				<c:if test="${more==true}">
-					<a href="main.do?mid=${b.mid}&cnt=${cnt+2}">더보기&gt;&gt;</a>
-				</c:if>
-			</c:if>
+		 -->
+		<c:if test="${more==true}">
+			<a href="main.do?mid=${boardMidCheck}&cnt=${cnt+2}">더보기&gt;&gt;</a>
+		</c:if>
+		<!-- 			</c:if> -->
 	</div>
 
 	<div id="footer">
