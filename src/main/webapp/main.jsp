@@ -41,7 +41,7 @@
 
 		<div id="main">
 			<h2>글 목록보기</h2>
-			<c:if test="${!memberMidCheck.equals('')}">
+			<c:if test="${mid != null}">
 				<c:if test="${datas.size() == 0}">작성한 글이 없습니다</c:if>
 			</c:if>
 			<c:forEach var="v" items="${datas}">
@@ -74,9 +74,9 @@
 			<c:if test="${!boardMidCheck.equals('')}">
 		 -->
 		<c:if test="${more==true}">
-			<a href="main.do?mid=${boardMidCheck}&cnt=${cnt+2}">더보기&gt;&gt;</a>
+			<a href="main.do?mid=${mid}&cnt=${cnt+2}">더보기&gt;&gt;</a>
 		</c:if>
-		<!-- 			</c:if> -->
+		<!-- </c:if> -->
 	</div>
 
 	<div id="footer">

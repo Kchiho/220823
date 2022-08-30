@@ -150,7 +150,7 @@ public class BoardDAO {
 			}else { // 특정 회원 조회
 				pstmt=conn.prepareStatement(sql_selectAll_SB);
 				pstmt.setString(1, bvo.getMid());
-				pstmt.setInt(2, bvo.getCnt());			
+				pstmt.setInt(2, bvo.getCnt());
 			}
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {

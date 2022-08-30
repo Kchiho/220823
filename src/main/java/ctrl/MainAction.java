@@ -45,17 +45,21 @@ public class MainAction implements Action{
 		}
 		//System.out.println("if문 후"+bvo);
 		ArrayList<BoardSet> datas=bdao.selectAll(bvo); // 페이지에서 보여줘야 할 데이터
+		//System.out.println(datas);
 		bvo.setCnt(cnt+1);
 		ArrayList<BoardSet> datasNext=bdao.selectAll(bvo); // 페이지에서 보여줘야 할 데이터 + 1
+		//System.out.println(datasNext);
 
 		if(datas.size() == datasNext.size()) { // 위의 2개가 같다면 더보기 xxx
+			//System.out.println("로그 : "+flag);
 			flag = false;
 		}
+		//System.out.println("로그 : " +flag);
 		request.setAttribute("more", flag);
 
 		ArrayList<MemberVO> member = mdao.selectAll(mvo); // 최근 가입한 회원 3명 조회
 
-		request.setAttribute("boardMidCheck", bvo.getMid());
+		request.setAttribute("mid", bvo.getMid());
 		request.setAttribute("member", member);
 		request.setAttribute("datas", datas);
 		request.setAttribute("cnt", cnt);
