@@ -66,7 +66,7 @@
 			</c:forEach>
 		</div>
 		<!-- 
-			<c:if test="${boardMidCheck.equals('')}">
+			<c:if test="${boardMidCheck.equals('')}"> el식은 equals xxx
 				<c:if test="${more==true}">
 					<a href="main.do?cnt=${cnt+2}">더보기&gt;&gt;</a>
 				</c:if>
